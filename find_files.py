@@ -30,6 +30,12 @@ for item in ar_name:  # item = '.\Library\il2cpp_cache\linkresult_B5B242D3FD8025
     try:
         os.makedirs(dist_dir + '\\' + item[2:item.rfind('\\')])  # создаем директорию "приемник"
     except FileExistsError:
-        pass
-    shutil.copy2(main_dir + item[1:], dist_dir + '\\' + item[2:item.rfind('\\')])  # копируем файл в "приемник"
-    os.remove(main_dir + item[1:])  # удаляем исходный файл - получем функцию перемещения
+        print('Не удалось создать директорию: ' + dist_dir + '\\' + item[2:item.rfind('\\')])
+    try:
+        shutil.copy2(main_dir + item[1:], dist_dir + '\\' + item[2:item.rfind('\\')])  # копируем файл в "приемник"
+    except PermissionError:
+        print('Файл не скопирован: ' + main_dir + item[1:])
+    try:
+        os.remove(main_dir + item[1:])  # удаляем исходный файл - получем функцию перемещения
+    except PermissionError:
+        print('Отказано в доступе. Файл не удален: ' + main_dir + item[1:])
