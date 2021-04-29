@@ -6,22 +6,25 @@ from sys import argv
 
 # main_dir = r'f:/'
 main_dir = r'\\mrs\buffer'
+find_name = 'History'
+deleted = False  # устанавливаем в True если надо удалять каталоги, если False - то просто список выводится
+
 try:
     main_dir = argv[1]
 except Exception as inst:
     print(type(inst))
     print(inst.args)
     print(inst)
-    # x, y = inst.args
-    # print('x =', x)
-    # print('y =', y)
 
-find_name = 'History'
-# устанавливаем в True если надо удалять каталоги, если False - то просто список выводится
-deleted = False
+try:
+    deleted = bool(argv[2])
+except Exception as inst:
+    print(type(inst))
+    print(inst.args)
+    print(inst)
 
+# ar_name = []
 os.chdir(main_dir)
-ar_name = []
 count = 0
 for root, dirs, files in os.walk(".", topdown=False):
     for name in dirs:
@@ -40,9 +43,9 @@ for root, dirs, files in os.walk(".", topdown=False):
                     print(type(inst))
                     print(inst.args)
                     print(inst)
-                    x, y = inst.args
-                    print('x =', x)
-                    print('y =', y)
+                    # x, y = inst.args
+                    # print('x =', x)
+                    # print('y =', y)
 
 print('Найдено каталогов:', count)
 # print(ar_name)
